@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>MediVerleih &ndash; Entity-Relationship-Diagramm</title>
+<style>
+  body { font-family: "Segoe UI", system-ui, Arial, sans-serif; margin: 0;
+         background: #f4f6f8; color: #1c2b36; }
+  header { background: #0a5468; color: #fff; padding: 18px 28px; }
+  header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+  header .sub { font-size: 13px; opacity: .75; }
+  main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  h2 { font-size: 17px; margin: 28px 0 4px; }
+  p.hinweis { color: #5f7183; font-size: 13px; margin: 0 0 14px; }
+  .karte { background: #fff; border: 1px solid #d9e0e6; border-radius: 8px;
+           padding: 20px; margin-bottom: 20px; overflow-x: auto; }
+  .mermaid { text-align: center; }
+  @media print {
+    body { background: #fff; }
+    header { background: #fff; color: #1c2b36; border-bottom: 2px solid #0a5468; }
+    .karte { border: 0; page-break-inside: avoid; }
+    h2 { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>MediVerleih &ndash; Entity-Relationship-Diagramm</h1>
+  <div class="sub">Datenbank <code>mediverleih</code> &middot; erzeugt aus information_schema</div>
+</header>
+<main>
+
+  <h2>1. &Uuml;bersicht</h2>
+  <p class="hinweis">Entit&auml;ten und Beziehungen &ndash; f&uuml;r die Pr&auml;sentationsfolie.</p>
+  <div class="karte"><pre class="mermaid">erDiagram
+    AUSLEIHART         ||--o{ AUSLEIHE           : "klassifiziert"
+    AUSLEIHE           ||--o{ AUSLEIHE_POSITION  : "enthaelt"
+    GERAET             ||--o{ AUSLEIHE_POSITION  : "betrifft"
+    GERAETETYP         ||--o{ GERAET             : "hat Exemplar"
+    HERSTELLER         ||--o{ GERAETETYP         : "produziert"
+    INSTITUTION        |o--o{ KUNDE              : "beschaeftigt"
+    KUNDE              ||--o{ AUSLEIHE           : "taetigt"</pre></div>
+
+  <h2>2. Mit Attributen</h2>
+  <p class="hinweis">Vollst&auml;ndiges Modell. PK = Prim&auml;rschl&uuml;ssel, FK = Fremdschl&uuml;ssel, UK = eindeutig.</p>
+  <div class="karte"><pre class="mermaid">erDiagram
+    AUSLEIHART         ||--o{ AUSLEIHE           : "klassifiziert"
+    AUSLEIHE           ||--o{ AUSLEIHE_POSITION  : "enthaelt"
+    GERAET             ||--o{ AUSLEIHE_POSITION  : "betrifft"
+    GERAETETYP         ||--o{ GERAET             : "hat Exemplar"
+    HERSTELLER         ||--o{ GERAETETYP         : "produziert"
+    INSTITUTION        |o--o{ KUNDE              : "beschaeftigt"
+    KUNDE              ||--o{ AUSLEIHE           : "taetigt"
+
+    AUSLEIHART {
+        int       id                       PK  
+        varchar   bezeichnung              UK  
+        varchar   beschreibung                 "optional"
+    }
+
+    AUSLEIHE {
+        int       id                       PK  
+        varchar   belegnummer              UK  "optional"
+        int       kunde_id                 FK  
+        int       ausleihart_id            FK  
+        date      ausleihdatum                 
+        date      geplante_rueckgabe           
+        date      tatsaechliche_rueckgabe      "optional"
+        enum      status                       
+        varchar   bemerkung                    "optional"
+        timestamp erfasst_am                   
+        int       leihdauer_tage               "berechnet, optional"
+    }
+
+    AUSLEIHE_POSITION {
+        int       id                       PK  
+        int       ausleihe_id              FK  
+        int       geraet_id                FK  
+        date      rueckgabe_datum              "optional"
+        int       aktiv_geraet_id          UK  "berechnet, optional"
+    }
+
+    GERAET {
+        int       id                       PK  
+        int       geraetetyp_id            FK  
+        varchar   seriennummer             UK  
+        varchar   inventarnummer           UK  
+        enum      status                       
+        varchar   notiz                        "optional"
+    }
+
+    GERAETETYP {
+        int       id                       PK  
+        int       hersteller_id            FK  
+        varchar   bezeichnung                  
+        varchar   modellnummer                 
+        text      beschreibung                 "optional"
+    }
+
+    HERSTELLER {
+        int       id                       PK  
+        varchar   name                     UK  
+        varchar   land                         "optional"
+        varchar   support_email                "optional"
+    }
+
+    INSTITUTION {
+        int       id                       PK  
+        varchar   name                         
+        enum      typ                          
+        varchar   uid_nummer               UK  "optional"
+        varchar   strasse                      
+        varchar   plz                          
+        varchar   ort                          
+        char      land                         
+        varchar   telefon                      "optional"
+        varchar   email                        "optional"
+    }
+
+    KUNDE {
+        int       id                       PK  
+        int       institution_id           FK  "optional"
+        enum      anrede                       
+        varchar   vorname                      
+        varchar   nachname                     
+        varchar   funktion                     "optional"
+        varchar   email                        "optional"
+        varchar   telefon                      "optional"
+        varchar   strasse                      "optional"
+        varchar   plz                          "optional"
+        varchar   ort                          "optional"
+        char      land                         "optional"
+    }</pre></div>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral',
+                       er: { useMaxWidth: true, entityPadding: 12 } });
+</script>
+</body>
+</html>

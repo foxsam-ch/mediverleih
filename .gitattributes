@@ -1,0 +1,12 @@
+# Zeilenenden normalisieren.
+# Wichtig: Alles, was auf dem Ubuntu-Server ausgefuehrt oder eingelesen
+# wird, braucht LF. Ein Shell-Skript mit CRLF scheitert dort mit
+# "bad interpreter: /usr/bin/env bash^M".
+
+* text=auto
+
+*.sh   text eol=lf
+*.sql  text eol=lf
+*.php  text eol=lf
+*.css  text eol=lf
+*.md   text eol=lf

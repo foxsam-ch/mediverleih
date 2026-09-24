@@ -1,0 +1,9 @@
+# Vom Installationsskript erzeugt, enthaelt die Datenbankpasswoerter
+web/config.php
+
+# Betriebssystem / Editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,196 @@
+/* =====================================================================
+   MediVerleih - Stylesheet
+   Bewusst ohne Framework und ohne CDN: die Applikation muss auch
+   ohne Internetverbindung vollstaendig funktionieren.
+   ===================================================================== */
+
+:root {
+    --grund:      #f4f6f8;
+    --flaeche:    #ffffff;
+    --rand:       #d9e0e6;
+    --text:       #1c2b36;
+    --gedaempft:  #5f7183;
+    --akzent:     #0f6f8c;
+    --akzent-alt: #0a5468;
+    --ok:         #1e7d4f;
+    --ok-bg:      #e6f4ec;
+    --warn:       #9a6400;
+    --warn-bg:    #fdf3e0;
+    --fehler:     #b3261e;
+    --fehler-bg:  #fdecea;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--grund);
+}
+
+/* ------------------------------------------------------- Kopfbereich */
+header {
+    background: var(--akzent-alt);
+    color: #fff;
+    padding: 0 24px;
+}
+
+.kopfzeile {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 0 12px;
+}
+
+.kopfzeile h1 { font-size: 20px; margin: 0; font-weight: 600; }
+.kopfzeile .untertitel { font-size: 13px; opacity: .75; }
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #cfe4ec;
+    text-decoration: none;
+    padding: 9px 14px;
+    border-radius: 6px 6px 0 0;
+    font-size: 14px;
+}
+
+nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+nav a.aktiv { background: var(--grund); color: var(--akzent-alt); font-weight: 600; }
+
+main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+h2 { font-size: 18px; margin: 0 0 4px; }
+h3 { font-size: 15px; margin: 24px 0 8px; color: var(--gedaempft); text-transform: uppercase; letter-spacing: .04em; }
+.hinweis { color: var(--gedaempft); font-size: 13px; margin: 0 0 18px; }
+
+/* ------------------------------------------------------- Karten */
+.karte {
+    background: var(--flaeche);
+    border: 1px solid var(--rand);
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.kennzahlen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.kennzahl {
+    background: var(--flaeche);
+    border: 1px solid var(--rand);
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.kennzahl .wert { font-size: 26px; font-weight: 600; line-height: 1.1; }
+.kennzahl .titel { font-size: 12px; color: var(--gedaempft); text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; }
+.kennzahl.achtung .wert { color: var(--fehler); }
+.kennzahl.warnung .wert { color: var(--warn); }
+
+/* ------------------------------------------------------- Tabellen */
+.tabellenrahmen { overflow-x: auto; }
+
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+
+th {
+    text-align: left;
+    padding: 9px 10px;
+    border-bottom: 2px solid var(--rand);
+    color: var(--gedaempft);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+td { padding: 9px 10px; border-bottom: 1px solid var(--rand); vertical-align: middle; }
+tbody tr:hover { background: #fafcfd; }
+td.zahl, th.zahl { text-align: right; font-variant-numeric: tabular-nums; }
+.leer { color: var(--gedaempft); font-style: italic; padding: 16px 10px; }
+
+/* ------------------------------------------------------- Status */
+.marke {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.marke.verfuegbar   { background: var(--ok-bg);    color: var(--ok); }
+.marke.verliehen    { background: #e7eef6;         color: #2b5580; }
+.marke.ausgemustert { background: #eceff1;         color: var(--gedaempft); }
+.marke.klasse       { background: #eef1f4;         color: var(--gedaempft); font-weight: 500; }
+
+.verzug { color: var(--fehler); font-weight: 600; }
+.gesperrt { color: var(--fehler); font-size: 12px; }
+
+/* ------------------------------------------------------- Formulare */
+form.filter { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+
+label { display: block; font-size: 12px; color: var(--gedaempft); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .04em; }
+
+input[type=text], input[type=date], select, textarea {
+    font: inherit;
+    padding: 7px 9px;
+    border: 1px solid var(--rand);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--text);
+    min-width: 150px;
+}
+
+textarea { width: 100%; min-height: 110px; font-family: "Cascadia Mono", Consolas, monospace; font-size: 13px; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--akzent); outline-offset: -1px; }
+
+.feldgruppe { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 16px; }
+
+button {
+    font: inherit;
+    font-weight: 600;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--akzent);
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover { background: var(--akzent-alt); }
+button.still { background: #e7ecef; color: var(--text); }
+button.still:hover { background: #dbe2e6; }
+button.klein { padding: 5px 11px; font-size: 13px; }
+
+/* ------------------------------------------------------- Meldungen */
+.meldung { padding: 12px 14px; border-radius: 7px; margin-bottom: 18px; border: 1px solid; font-size: 14px; }
+.meldung.ok     { background: var(--ok-bg);     border-color: #b8ddc7; color: #145c39; }
+.meldung.fehler { background: var(--fehler-bg); border-color: #f2c4c0; color: #8c1c16; }
+.meldung code   { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 4px; }
+
+/* ------------------------------------------------------- SQL-Konsole */
+.beispiele { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 0; }
+.beispiele button { background: #e7ecef; color: var(--text); font-weight: 500; font-size: 13px; padding: 5px 11px; }
+.beispiele button:hover { background: #dbe2e6; }
+pre.sql { background: #f7f9fa; border: 1px solid var(--rand); border-radius: 6px; padding: 10px 12px; overflow-x: auto; font-size: 13px; margin: 0 0 14px; }
+
+footer { max-width: 1200px; margin: 0 auto; padding: 8px 24px 30px; color: var(--gedaempft); font-size: 12px; }
+
+/* Spalten, die nicht umbrechen sollen */
+td.nowrap, th.nowrap { white-space: nowrap; }
