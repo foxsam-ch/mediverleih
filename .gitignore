@@ -10,3 +10,7 @@ desktop.ini
 
 # Eigene Infrastrukturnotizen, gehoeren nicht zur Datenbankimplementierung
 deploy/ssh-zugang.md
+
+# Praesentationsmaterial, kein Bestandteil der Implementierung
+docs/demo-ablauf.md
+docs/ERD-und-Demoablauf.docx
