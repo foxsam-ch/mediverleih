@@ -1,7 +1,7 @@
 # Entity-Relationship-Diagramm
 
 **Datenbank:** `mediverleih`
-**Erzeugt am:** 24.09.2026 16:03
+**Erzeugt am:** 25.09.2026 11:58
 
 > Dieses Dokument wird von `deploy/erd-generieren.php` aus
 > `information_schema` erzeugt. Jede Linie im Diagramm entspricht einer
@@ -15,7 +15,66 @@
 
 ---
 
-## 1. Übersicht
+## 1. Das Diagramm lesen
+
+Die Diagramme nutzen die **Krähenfuss-Notation** (crow's foot). Die Zeichen stehen
+an beiden Enden einer Linie und geben an, wie viele Zeilen der jeweiligen Tabelle
+beteiligt sind.
+
+```
+||   genau eins
+|o   null oder eins
+o{   null oder mehr
+|{   eins oder mehr
+```
+
+Der senkrechte Strich steht für *eins*, das `o` für *null*, und die geschweifte
+Klammer ist der namensgebende Krähenfuss – sie zeigt immer auf die n-Seite.
+
+### Leserichtung
+
+Gelesen wird von links nach rechts, mit dem Verb dazwischen:
+
+```
+HERSTELLER ||--o{ GERAETETYP : "produziert"
+```
+
+- Ein Hersteller produziert **null bis viele** Gerätetypen.
+- Ein Gerätetyp hat **genau einen** Hersteller.
+
+Beide Aussagen gelten gleichzeitig. Ein Strich sind immer zwei Aussagen, eine je
+Richtung.
+
+### Woher die Kardinalitäten kommen
+
+Sie sind nicht gesetzt, sondern abgelesen:
+
+```
+Fremdschluesselspalte ist NOT NULL   ->  ||   genau eins
+Fremdschluesselspalte erlaubt NULL   ->  |o   null oder eins
+immer auf der Kindseite              ->  o{   null bis viele
+```
+
+Die Kindseite ist immer `o{`, nie `|{`. Das ist keine Nachlässigkeit, sondern
+korrekt: Ein Fremdschlüssel erzwingt technisch nie eine Mindestanzahl. Dass in
+der Praxis kein Beleg ohne Position entsteht, garantiert die Transaktion in der
+zuständigen Stored Procedure – nicht das Schema.
+
+### Wo die n:m-Beziehungen stecken
+
+Eine n:m-Beziehung erscheint im Diagramm nicht als eine Linie, sondern als
+zwei, die auf dieselbe Tabelle zeigen. Erkennbar ist eine solche
+Auflösungstabelle an einem **zusammengesetzten UNIQUE über ihre
+Fremdschlüssel** – er besagt, dass es jede Kombination nur einmal geben
+darf. Zwei Fremdschlüssel allein genügen als Merkmal nicht: `ausleihe`
+hat ebenfalls zwei und ist trotzdem eine eigenständige Entität.
+
+- `ausleihe_position` löst `ausleihe` & `geraet` auf
+
+
+---
+
+## 2. Übersicht
 
 Nur Entitäten und Beziehungen – für Präsentationsfolie und Einstieg.
 
@@ -32,9 +91,17 @@ erDiagram
 
 ---
 
-## 2. Mit Attributen
+## 3. Mit Attributen
 
-Vollständiges Modell mit Spalten. `PK` = Primärschlüssel, `FK` = Fremdschlüssel, `UK` = eindeutig.
+Vollständiges Modell mit Spalten.
+
+| Kürzel | Bedeutung |
+|---|---|
+| `PK` | Primärschlüssel |
+| `FK` | Fremdschlüssel – entspricht einer Linie im Diagramm |
+| `UK` | eindeutig (UNIQUE), aber kein Primärschlüssel |
+| `optional` | Spalte erlaubt NULL |
+| `berechnet` | Generated Column, wird nie von Hand gefüllt |
 
 ```mermaid
 erDiagram
@@ -130,7 +197,7 @@ erDiagram
 
 ---
 
-## 3. Beziehungen im Detail
+## 4. Beziehungen im Detail
 
 | Von | Spalte | Nach | Pflicht | ON DELETE | ON UPDATE |
 |---|---|---|---|---|---|
@@ -159,7 +226,7 @@ erDiagram
 
 ---
 
-## 4. Kennzahlen
+## 5. Kennzahlen
 
 | | |
 |---|---|
