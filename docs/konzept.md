@@ -225,7 +225,6 @@ Ubuntu Server 26.04.1 LTS (Hyper-V-VM lnx-eval01, 192.168.1.107)
 ```
 
 Installation als Shell-Skript `deploy/install.sh` – reproduzierbar und zugleich Doku.
-SSH-Zugang siehe `deploy/ssh-zugang.md`.
 
 ---
 
@@ -293,7 +292,6 @@ sql/03_testdaten.sql    Beispieldaten (18 Geraete, 5 Institutionen, 6 Ausleihen)
                         vor einer Demo erneut einspielen - Datumswerte sind relativ
 sql/04_rechte.sql       Benutzer und Berechtigungen
 deploy/install.sh       Ubuntu-Setup (MariaDB, Apache, PHP, phpMyAdmin)
-deploy/ssh-zugang.md    SSH-Einrichtung
 docs/implementierung.md Protokoll der Probleme beim Einspielen + Testprotokoll
 web/style.css           Stylesheet, ohne Framework und ohne CDN
 web/db.php              PDO-Verbindungen (Schreib- und Nur-Lese-Benutzer)

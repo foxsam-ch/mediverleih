@@ -134,7 +134,6 @@ sql/04_rechte.sql        Datenbankbenutzer und Berechtigungen
 
 deploy/install.sh        Setup auf Ubuntu Server
 deploy/erd-generieren.php  erzeugt docs/erd.md aus information_schema
-deploy/ssh-zugang.md     SSH-Einrichtung
 
 docs/konzept.md          Datenmodell, Normalisierungsnachweis, Abgrenzung
 docs/implementierung.md  Protokoll der Probleme beim Einspielen + Testprotokoll

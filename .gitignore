@@ -7,3 +7,6 @@ desktop.ini
 .DS_Store
 .vscode/
 .idea/
+
+# Eigene Infrastrukturnotizen, gehoeren nicht zur Datenbankimplementierung
+deploy/ssh-zugang.md
